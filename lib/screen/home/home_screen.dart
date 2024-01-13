@@ -368,7 +368,30 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             for(int i=0;i<productList.length;i++)
               {
-                productList[i]["brand"]=gv;
+                if(productList[i]["image"]=="assets/image/1.jpeg")
+                  {
+                    productList[i]["brand"]="Samsung";
+                  }
+                else if(productList[i]["image"]=="assets/image/2.png")
+                {
+                  productList[i]["brand"]="Apple";
+                }
+                else if(productList[i]["image"]=="assets/image/3.png")
+                {
+                  productList[i]["brand"]="Vivo";
+                }
+                else if(productList[i]["image"]=="assets/image/4.png")
+                {
+                  productList[i]["brand"]="Oppo";
+                }
+                else if(productList[i]["image"]=="assets/image/5.png")
+                {
+                  productList[i]["brand"]="Nokia";
+                }
+                else
+                  {
+                    productList[i]["brand"]="Any";
+                  }
                 productList[i]["name"]=productList[i]["nameText"].text;
                 productList[i]["price"]=int.parse("${productList[i]["priceText"].text}");
                 print(productList);
