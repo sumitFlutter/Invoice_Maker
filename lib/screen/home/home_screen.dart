@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String gv="";
   String? path;
   int index=0;
   GlobalKey<FormState> key=GlobalKey<FormState>();
@@ -40,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+          floatingActionButton: FloatingActionButton(onPressed: () => Navigator.pushNamed(context, "invoice"),child: Image.asset("assets/image/00.png",fit: BoxFit.fill,height: 45,width: 45,),)
     ));
   }
 
@@ -109,12 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               }
                               return null;
                             },
-                            textInputAction: TextInputAction.next,
                             style: const TextStyle(color: Colors.white),
+                            textInputAction: TextInputAction.next,
                             controller: nametxt,
                             decoration: const InputDecoration(
                               hintText: "Surname Name ",
-                                hintStyle: TextStyle(color: Colors.white60,fontWeight: FontWeight.bold),
+                                hintStyle: TextStyle(color: Colors.white30,fontWeight: FontWeight.bold),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(strokeAlign: 2,color: Colors.white60))),
                           )),
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
                               hintText: "name@gmail.com",
-                                hintStyle: TextStyle(color: Colors.white60,fontWeight: FontWeight.bold),
+                                hintStyle: TextStyle(color: Colors.white30,fontWeight: FontWeight.bold),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(strokeAlign: 2,color: Colors.white60))),
                           )),
@@ -171,13 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                             return null;
                           },
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                           controller: mobiletxt,
                           keyboardType: TextInputType.number,
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
                             hintText: "1234567890",
-                              hintStyle: TextStyle(color: Colors.white60,fontWeight: FontWeight.bold),
+                              hintStyle: TextStyle(color: Colors.white30,fontWeight: FontWeight.bold),
                               enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(strokeAlign: 2,color: Colors.white60))),
                         )),
@@ -200,11 +200,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               return null;
                             },
                             style: const TextStyle(color: Colors.white),
-                            textInputAction: TextInputAction.next,
                             controller: addresstxt,
                             decoration: const InputDecoration(
                                 hintText: "surat",
-                                hintStyle: TextStyle(color: Colors.white60,fontWeight: FontWeight.bold),
+                                hintStyle: TextStyle(color: Colors.white30,fontWeight: FontWeight.bold),
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(strokeAlign: 2,color: Colors.white60))),
                           )),
@@ -215,17 +214,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(onPressed: () {
                       if (key.currentState!.validate())
                         {
-                          personaldetails.add({"name":nametxt.text});
-                          personaldetails.add({"email":emailtxt.text});
-                          personaldetails.add({"mobile":mobiletxt.text});
-                          personaldetails.add({"address":addresstxt.text});
-                          personaldetails.add({"image":path});
+                          personaldetails["name"]=nametxt.text;
+                          personaldetails["address"]=addresstxt.text;
+                          personaldetails["mobile"]=mobiletxt.text;
+                          personaldetails["email"]=emailtxt.text;
+                          personaldetails["image"]=path;
                           setState(() {
                             index=1;
                           });
-                          print(personaldetails);
                         }
-                }, child: const Text("Submit",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),)),
+                }, child: const Text("Next",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),)),
               ],
             )
 
@@ -245,14 +243,16 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Row(
                 children: [
-                  Container(margin: EdgeInsets.all(25),
+                  Container(margin: const EdgeInsets.only(left: 15,bottom: 25,right: 15,top: 25),
                     height: 120,width: 120,child: Image.asset("${productList[index]["image"]}",fit: BoxFit.fill),),
                   Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Text("Enter product name:",style: TextStyle(color: Colors.white,fontSize: 15),),
                           SizedBox(height:60,width:60,child: TextFormField(
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.name,
                             controller: productList[index]["nameText"],
                             style: const TextStyle(color: Colors.white),
@@ -260,9 +260,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const Text("Enter product's price:",style: TextStyle(color: Colors.white,fontSize: 15),),
                           SizedBox(height:60,width:60,child: TextFormField(
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             controller: productList[index]["priceText"],
                             style: const TextStyle(color: Colors.white),
@@ -270,11 +272,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text("Enter product's price:",style: TextStyle(color: Colors.white,fontSize: 15),),
+                          const Text("Enter Quantity:",style: TextStyle(color: Colors.white,fontSize: 15),),
                           SizedBox(height:60,width:60,child: TextFormField(
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             controller: productList[index]["nText"],
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text("Enter Purchase Date:",style: TextStyle(color: Colors.white,fontSize: 15),),
+                          SizedBox(height:60,width:60,child: TextFormField(
+                            keyboardType: TextInputType.datetime,
+                            controller: productList[index]["dateText"],
                             style: const TextStyle(color: Colors.white),
                           )),
                         ],
@@ -288,30 +303,29 @@ class _HomeScreenState extends State<HomeScreen> {
               const Text("Please Select Product's Brand:",style: TextStyle(fontSize:18,color: Colors.white),),
               Row(
                 children: [
-                  Radio(activeColor:Colors.blue,value: "samsung", groupValue: gv, onChanged: (value) {
-                   setState(() {
-                     gv=value!;
-                     if(gv=="samsung")
+                  Radio(activeColor:Colors.blue,value: "samsung", groupValue:productList[index]["brand"], onChanged: (value) {
+                   setState(() {productList[index]["brand"]=value!;
+                     if(productList[index]["brand"]=="samsung")
                        {
                          productList[index]["image"]="assets/image/1.jpeg";
                        }
                    });
                   },),
                   Text("Samsung",style: TextStyle(color: Colors.white),),
-                  Radio(activeColor:Colors.blue,value: "apple", groupValue: gv, onChanged: (value) {
+                  Radio(activeColor:Colors.blue,value: "apple", groupValue: productList[index]["brand"], onChanged: (value) {
                     setState(() {
-                      gv=value!;
-                      if(gv=="apple")
+                      productList[index]["brand"]=value!;
+                      if( productList[index]["brand"]=="apple")
                       {
                         productList[index]["image"]="assets/image/2.png";
                       }
                     });
                   },),
                   Text("Apple",style: TextStyle(color: Colors.white),),
-                  Radio(activeColor:Colors.blue,value: "vivo", groupValue: gv, onChanged: (value) {
+                  Radio(activeColor:Colors.blue,value: "vivo", groupValue: productList[index]["brand"], onChanged: (value) {
                     setState(() {
-                      gv=value!;
-                      if(gv=="vivo")
+                      productList[index]["brand"]=value!;
+                      if(productList[index]["brand"]=="vivo")
                       {
                         productList[index]["image"]="assets/image/3.png";
                       }
@@ -324,26 +338,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Row(
                     children: [
-                      Radio(activeColor:Colors.blue,value: "oppo", groupValue: gv, onChanged: (value) {
+                      Radio(activeColor:Colors.blue,value: "oppo", groupValue: productList[index]["brand"], onChanged: (value) {
                         setState(() {
-                          gv=value!;
-                          if(gv=="oppo")
+                          productList[index]["brand"]=value!;
+                          if(productList[index]["brand"]=="oppo")
                           {
                             productList[index]["image"]="assets/image/4.png";
                           }
                         });
                       },),
                       Text("Oppo",style: TextStyle(color: Colors.white),),
-                      Radio(activeColor:Colors.blue,value: "Nokia", groupValue: gv, onChanged: (value) {
+                      Radio(activeColor:Colors.blue,value: "Nokia", groupValue: productList[index]["brand"], onChanged: (value) {
                         setState(() {
-                          gv=value!;
-                          if(gv=="Nokia")
+                          productList[index]["brand"]=value!;
+                          if(productList[index]["brand"]=="Nokia")
                           {
                             productList[index]["image"]="assets/image/5.png";
                           }
                         });
                       },),
                       Text("Nokia",style: TextStyle(color: Colors.white),),
+                      Spacer(),
+                      IconButton(onPressed: () {
+                        setState(() {
+                          productList.removeAt(index);
+                        });
+                      }, icon: Icon(Icons.delete_forever,color: Colors.red),)
 
 
                     ],
@@ -358,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ElevatedButton(onPressed: () {
           setState(() {
   productList.add({
-    "name":"","price":0,"image":"assets/image/0.png","net_q":0,"brand":"","nameText":TextEditingController(),"priceText":TextEditingController(),"nText":TextEditingController(),
+    "name":"","price":0,"image":"assets/image/0.png","net_q":0,"brand":"","nameText":TextEditingController(),"priceText":TextEditingController(),"nText":TextEditingController(),"dateText":TextEditingController(),"date":"",
           });
           });
 
@@ -368,34 +388,12 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             for(int i=0;i<productList.length;i++)
               {
-                if(productList[i]["image"]=="assets/image/1.jpeg")
-                  {
-                    productList[i]["brand"]="Samsung";
-                  }
-                else if(productList[i]["image"]=="assets/image/2.png")
-                {
-                  productList[i]["brand"]="Apple";
-                }
-                else if(productList[i]["image"]=="assets/image/3.png")
-                {
-                  productList[i]["brand"]="Vivo";
-                }
-                else if(productList[i]["image"]=="assets/image/4.png")
-                {
-                  productList[i]["brand"]="Oppo";
-                }
-                else if(productList[i]["image"]=="assets/image/5.png")
-                {
-                  productList[i]["brand"]="Nokia";
-                }
-                else
-                  {
-                    productList[i]["brand"]="Any";
-                  }
                 productList[i]["name"]=productList[i]["nameText"].text;
                 productList[i]["price"]=int.parse("${productList[i]["priceText"].text}");
-                print(productList);
+                productList[i]["net_q"]=int.parse("${productList[i]["nText"].text}");
+                productList[i]["date"]=productList[i]["dateText"].text;
               }
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Your Data Is Updated",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),  shape: Border.fromBorderSide(BorderSide(width: 12,color: Colors.white70)),backgroundColor: Colors.white,));
           });
         }, child: const Text("Submit"))
       ],
