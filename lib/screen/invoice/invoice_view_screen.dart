@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:invoice_maker/utils/global.dart';
+import 'package:invoice_maker/utils/widgets/pdf.dart';
 class InvoiceView extends StatefulWidget {
   const InvoiceView({super.key});
 
@@ -10,16 +11,6 @@ class InvoiceView extends StatefulWidget {
 }
 
 class _InvoiceViewState extends State<InvoiceView> {
-  int total=0;
-  int with_gst=0;
-  void count()
-  {
-    for(int i=0;i<productList.length;i++)
-      {
-        total=total+((productList[i]["price"]*productList[i]["net_q"])as int);
-      }
-    with_gst=total+(total*18~/100);
-  }
   @override
   void initState() {
     // TODO: implement initState
@@ -39,8 +30,8 @@ class _InvoiceViewState extends State<InvoiceView> {
                   padding: const EdgeInsets.all(25),
                   child: Row(
                     children: [
-                      personaldetails["image"]==null?CircleAvatar(radius: 80,):
-                      CircleAvatar(radius: 80,
+                      personaldetails["image"]=="assets/image/0.png"?const CircleAvatar(radius: 60,):
+                      CircleAvatar(radius: 60,
                       backgroundImage: FileImage(File("${personaldetails["image"]}")),),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +42,7 @@ class _InvoiceViewState extends State<InvoiceView> {
                           Text(personaldetails["address"],style: const TextStyle(color: Colors.white,fontSize: 15),),
                           Text("Total price is \$$total",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
                           const Text("+ GST 18%",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
-                          Text("Net price is \$$with_gst",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+                          Text("Net price is \$$with_GST",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
 
 
                         ],
@@ -60,25 +51,35 @@ class _InvoiceViewState extends State<InvoiceView> {
                   ),
                 ),
                 Column(
-                  children: List.generate(productList.length, (index) => Container(margin: EdgeInsets.all(25),child: Row(
+                  children: List.generate(productList.length, (index) => Container(margin: const EdgeInsets.all(25),child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset("${productList[index]["image"]}",height: 100,width: 100,fit: BoxFit.fill,),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("Name=${productList[index]["name"]}\n",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                          Text("Price=\$${productList[index]["price"]}\n",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
-                          Text("Net Quantity=${productList[index]["net_q"]}\n",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
-                          Text("Date=${productList[index]["date"]}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                          Text("Name=${productList[index]["name"]}\n",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                          Text("Price=\$${productList[index]["price"]}\n",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                          Text("Net Quantity=${productList[index]["net_q"]}\n",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+                          Text("Date=${productList[index]["date"]}",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
                         ],
                       ),
                     ],
-                  ),)),
+                  ),
+                  ),
+                  ),
                 )
               ],
             ),
           ),
-    ));
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        setState(() {
+          createPDF();
+        });
+
+      },
+      child: Icon(Icons.save)),
+    ),
+    );
   }
 }
