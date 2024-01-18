@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Go To",style: TextStyle(color: Colors.yellow,fontSize: 22),),
-                        const Text("User Input Details Screen from here",style: TextStyle(color: Colors.yellow,fontSize: 22),),
+                        const Text("User Input Details Screen",style: TextStyle(color: Colors.yellow,fontSize: 22),),
                         InkWell(onTap: () => setState(() {
                           Navigator.pushNamed(context, "getter");
                         }),
