@@ -9,7 +9,7 @@ Map personaldetails={
 };
 List<Map> productList=[
   {
-    "name":"","price":0,"image":"assets/image/0.png","net_q":0,"brand":"","nameText":TextEditingController(),"priceText":TextEditingController(),"nText":TextEditingController(),"dateText":TextEditingController(),"date":"",
+    "name":"","price":1,"image":"assets/image/0.png","net_q":1,"brand":"","nameText":TextEditingController(),"priceText":TextEditingController(),"nText":TextEditingController(),"dateText":TextEditingController(),"date":"",
   }
 ];
 int total=0;
